@@ -4,7 +4,6 @@ import { createProducto, updateProducto } from '../api/productos';
 const productoInicial = {
   nombre: '',
   precio: '',
-  stock: '',
 };
 
 function ProductoForm({ productoSeleccionado, onSuccess, onCancel }) {
@@ -17,7 +16,6 @@ function ProductoForm({ productoSeleccionado, onSuccess, onCancel }) {
       setForm({
         nombre: productoSeleccionado.nombre ?? '',
         precio: productoSeleccionado.precio ?? '',
-        stock: productoSeleccionado.stock ?? '',
       });
     } else {
       setForm(productoInicial);
@@ -35,16 +33,15 @@ function ProductoForm({ productoSeleccionado, onSuccess, onCancel }) {
     setError(null);
 
     try {
-      const productoData = {
-        nombre: form.nombre,
-        precio: parseFloat(form.precio),
-        stock: parseInt(form.stock),
+      const data = {
+        ...form,
+        precio: Number(form.precio),
       };
 
       if (productoSeleccionado?.id) {
-        await updateProducto(productoSeleccionado.id, productoData);
+        await updateProducto(productoSeleccionado.id, data);
       } else {
-        await createProducto(productoData);
+        await createProducto(data);
       }
 
       onSuccess();
@@ -59,7 +56,9 @@ function ProductoForm({ productoSeleccionado, onSuccess, onCancel }) {
   return (
     <div>
       <h2>{productoSeleccionado ? 'Editar producto' : 'Nuevo producto'}</h2>
+
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>
@@ -80,20 +79,6 @@ function ProductoForm({ productoSeleccionado, onSuccess, onCancel }) {
               type="number"
               name="precio"
               value={form.precio}
-              onChange={handleChange}
-              step="0.01"
-              required
-            />
-          </label>
-        </div>
-
-        <div>
-          <label>
-            Stock:
-            <input
-              type="number"
-              name="stock"
-              value={form.stock}
               onChange={handleChange}
               required
             />

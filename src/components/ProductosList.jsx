@@ -25,6 +25,7 @@ function ProductosList({ onEdit }) {
 
   async function handleDelete(id) {
     if (!confirm('¿Seguro que deseas eliminar este producto?')) return;
+
     try {
       await deleteProducto(id);
       await cargarProductos();
@@ -39,6 +40,7 @@ function ProductosList({ onEdit }) {
   return (
     <div>
       <h2>Lista de productos</h2>
+
       {productos.length === 0 ? (
         <p>No hay productos registrados.</p>
       ) : (
@@ -48,7 +50,6 @@ function ProductosList({ onEdit }) {
               <th>Id</th>
               <th>Nombre</th>
               <th>Precio</th>
-              <th>Stock</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -58,7 +59,6 @@ function ProductosList({ onEdit }) {
                 <td>{p.id}</td>
                 <td>{p.nombre}</td>
                 <td>{p.precio}</td>
-                <td>{p.stock}</td>
                 <td>
                   <button onClick={() => onEdit(p)}>Editar</button>
                   <button onClick={() => handleDelete(p.id)}>Eliminar</button>
@@ -68,6 +68,7 @@ function ProductosList({ onEdit }) {
           </tbody>
         </table>
       )}
+
       <button onClick={cargarProductos}>Recargar</button>
     </div>
   );
