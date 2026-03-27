@@ -25,6 +25,14 @@ function Menu() {
       <NavLink to="/productos" style={linkStyle}>
         Productos
       </NavLink>
+
+      <NavLink to="/clientes" style={linkStyle}>
+        Clientes
+      </NavLink>
+
+      <NavLink to="/proveedores" style={linkStyle}>
+        Proveedores
+      </NavLink>
     </nav>
   );
 }
